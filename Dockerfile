@@ -5,15 +5,12 @@ ARG app_dir="/home/go/app"
 # * Building the application
 FROM golang:1.22-alpine3.20 AS build
 
-# Installiere die LZO-Bibliothek und Abhängigkeiten
-RUN apk add --no-cache lzo-dev
+# Installiere gcc und die LZO-Bibliothek
+RUN apk add --no-cache gcc g++ lzo-dev
 
 ARG app_dir
 
 WORKDIR ${app_dir}
-
-ENV GOOS=linux
-ENV GOARCH=amd64
 
 # Lade die Module herunter
 RUN --mount=type=cache,target=/go/pkg/mod/ \
