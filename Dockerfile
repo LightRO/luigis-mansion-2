@@ -5,9 +5,19 @@ ARG app_dir="/home/go/app"
 
 # * Building the application
 FROM golang:1.22-alpine3.20 AS build
+
+RUN apt-get update && apt-get install -y \
+    lzo \
+    lzo-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 ARG app_dir
 
 WORKDIR ${app_dir}
+
+ENV GOOS=linux
+ENV GOARCH=amd64
+
 
 RUN --mount=type=cache,target=/go/pkg/mod/ \
 	--mount=type=bind,source=go.sum,target=go.sum \
