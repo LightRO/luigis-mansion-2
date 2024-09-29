@@ -6,10 +6,7 @@ ARG app_dir="/home/go/app"
 # * Building the application
 FROM golang:1.22-alpine3.20 AS build
 
-RUN apt-get update && apt-get install -y \
-    lzo \
-    lzo-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache lzo-dev
 
 ARG app_dir
 
