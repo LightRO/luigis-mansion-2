@@ -30,6 +30,9 @@ FROM alpine:3.20 AS final
 ARG app_dir
 WORKDIR ${app_dir}
 
+# Installiere die LZO-Bibliothek im finalen Image
+RUN apk add --no-cache lzo
+
 RUN addgroup go && adduser -D -G go go
 
 RUN mkdir -p ${app_dir}/log && chown go:go ${app_dir}/log
